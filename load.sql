@@ -8,16 +8,19 @@ insert into Office values ('Bravo', 'Baltimore', '1500');
 insert into Office values ('Charlie', 'Rockville', '2000');
 insert into Office values ('Delta', 'Baltimore', '2500');
 insert into Office values ('Echo', 'Hagerstown', '3000');
-insert into CustomAgencies values ('11111', 'Foxtrot', 'Annapolis', '1111111111');
-insert into CustomAgencies values ('22222', 'Golf', 'Baltimore', '2222222222');
-insert into CustomAgencies values ('33333', 'Hotel', 'Fredrick', '3333333333');
-insert into CustomAgencies values ('44444', 'India', 'Silver Spring', '4444444444');
-insert into CustomAgencies values ('55555', 'Julie', 'Ocean City', '5555555555');
+
 insert into AgencyLocation values ('Annapolis', '12345 Wyatt Drive, Annapolis MD 21586');
 insert into AgencyLocation values ('Baltimore', '23456 Wyatt Lane, Baltimore MD 25498');
 insert into AgencyLocation values ('Fredrick', '34567 Blue Circle, Fredrick MD 27895');
 insert into AgencyLocation values ('Silver Spring', '45678 Red Drive, Silver Spring MD 45876');
 insert into AgencyLocation values ('Ocean City', '56789 Cheese Lane, Ocean City MD 75868');
+
+insert into CustomerAgencies values ('11111', 'Foxtrot', 'Annapolis', '1111111111');
+insert into CustomerAgencies values ('22222', 'Golf', 'Baltimore', '2222222222');
+insert into CustomerAgencies values ('33333', 'Hotel', 'Fredrick', '3333333333');
+insert into CustomerAgencies values ('44444', 'India', 'Silver Spring', '4444444444');
+insert into CustomerAgencies values ('55555', 'Julie', 'Ocean City', '5555555555');
+
 insert into RentalAgreement values ('66666', '500', '1282017');
 insert into RentalAgreement values ('77777', '600', '1172017');
 insert into RentalAgreement values ('88888', '700', '1062017');

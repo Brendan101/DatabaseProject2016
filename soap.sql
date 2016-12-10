@@ -5,6 +5,13 @@ create table Office
 	primary key (office_name)
 	);
 
+create table AgencyLocation
+       (agency_city             varchar(25),
+        agency_address          varchar(100),
+        primary key (agency_city)
+        );
+
+
 create table CustomerAgencies
        (agency_id		varchar(8),
        	agency_name		varchar(25),
@@ -13,12 +20,6 @@ create table CustomerAgencies
 	primary key (agency_id),
 	foreign key (agency_city) references AgencyLocation
 		on delete cascade
-	);
-
-create table AgencyLocation
-       (agency_city		varchar(25),
-       	agency_address		varchar(100),
-	primary key (agency_city)
 	);
 
 create table RentalAgreement
@@ -33,8 +34,8 @@ create table Manage
         office_name		varchar(25),
 	agency_id		varchar(8),
 	rental_id		varchar(8),
-	primary key (manage_id, office_name, agency_id, rental_id),
-	foreign key (office_name) references Office,
-	foreign key (agency_id) references CustomerAgencies,
-	foreign key (rental_id) references RentalAgreement
+	primary key (manage_id),
+	foreign key (office_name) references Office(office_name),
+	foreign key (agency_id) references CustomerAgencies(agency_id),
+	foreign key (rental_id) references RentalAgreement(rental_id)
 	);
