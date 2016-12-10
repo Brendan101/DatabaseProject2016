@@ -46,7 +46,7 @@ def select():
 
     if table == "Office":
         value = input("What office_name?")
-        statement = "select * from " + table + " where office_name=" + value
+        statement = "select * from " + table + " where office_name='" + value + "';"
     elif table == "CustomerAgencies":
         value = input("What agency_id?")
         statement = "select * from " + table + " where agency_id=" + value
@@ -116,20 +116,25 @@ def runSql(statement):
     con = None
     
     try:
-        con = lite.connect("db.project")
+        con = lite.connect("soap.sql")
+        print(con)
         cur = con.cursor()
-    
+        print(cur)
+        print(statement)
         cur.execute(statement)
+        print("Hello")
         result = cur.fetchall()
-    
+        print(result)
         for rec in result:
             for field in rec:
                 print(field)
                 
-        return("Success!")
+        print("Success!")
     
         con.commit()
         con.close()
+
+        return 0
     
     
     except:
@@ -167,4 +172,3 @@ while(done == 0):
         print("Enter a valid command")
     
     finished = runSql(statement)
-
