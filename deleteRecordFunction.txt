@@ -1,0 +1,3 @@
+def deleteRecord(table, column, value):
+	statement = "delete from " + table + " where " + column + "=" + value
+	return statement
