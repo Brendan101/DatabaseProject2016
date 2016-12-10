@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
-# Lists all the database
-
+# Lists all the database tables and allows user to erase one
 
 
 import sqlite3 as lite
