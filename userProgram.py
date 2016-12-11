@@ -1,7 +1,31 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+
+
+# ----------------------------------------------------------------
+#
+# userProgram.py  
+#
+# This program is part of the final project for CMSC461, Fall 2016
+# taught by professor George Ray.
+#
+# Created by Group 3:
+# James Alfano
+# Domenick Powers
+# Alex McCaslin
+# Brendan Waters
+# Sam Benas
+#
+# ----------------------------------------------------------------
+
+
 import sqlite3 as lite
 import sys
+
+db_file = "db.project"
+
+
+# Loads data from a CSV file
 
 def bulkLoad():
     print("Bulk loading")
@@ -46,6 +70,8 @@ def bulkLoad():
         # Executting
         runSql(insert_string)
 
+# Searches one table for a given value
+
 def select():
     table = raw_input("What table? Office, CustomerAgencies, AgencyLocation, RentalAgreement, Manage: ")
     statement = ""
@@ -66,7 +92,11 @@ def select():
         value = raw_input("manage_id? ")
         statement = "select * from " + table + " where manage_id=" + value
 
+    print("") # For readability
     return statement
+
+
+# Inserts one row into table
 
 def insert():
     table = raw_input("What table? Office, CustomerAgencies, AgencyLocation, RentalAgreement, Manage: ")
@@ -102,9 +132,12 @@ def insert():
 
     return statement
 
+
+# Deletes one row from a table
+
 def delete():
     
-    table = raw_input("What table? Office, CustomerAgencies, AgencyLocation, RentalAgreement, Manage ")
+    table = raw_input("What table? Office, CustomerAgencies, AgencyLocation, RentalAgreement, Manage: ")
     column = raw_input("What column? ")
     value = raw_input("What value? ")
 
@@ -117,31 +150,44 @@ def delete():
     
     return statement
 
+
+# Deletes all rows from a table
+
 def erase():
     
-    table = input("What table? ")
+    #table = raw_input("What table? ")
+    table = raw_input("What table? Office, CustomerAgencies, AgencyLocation, RentalAgreement, Manage: ")
+
     
     statement = "DELETE FROM " + table + ";"
     return statement
+
+
+# Used to execute SQL queries 
 
 def runSql(statement):
     con = None
     
     try:
-        con = lite.connect("db.project")
-        #print(con)
+        con = lite.connect(db_file)
         cur = con.cursor()
-        #print(cur)
-        print(statement)
+        #print("Executing statement: " + statement) # Debugging
         cur.execute(statement)
+        
         result = cur.fetchall()
-        print(result)
+
+        #if result:
+        #    print(result)  # Debug
+
         for rec in result:
             for field in rec:
                 print(field)
+            print("") # newline
                 
+        
         print("Success!")
-    
+        print("")    
+
         con.commit()
         con.close()
 
@@ -152,6 +198,8 @@ def runSql(statement):
         print("ERROR!  Exitting.")
         exit(-1)
 
+
+# Loop to handle user menu
 
 done = 0
 
@@ -166,7 +214,7 @@ while(done == 0):
 
     statement = ""
     tableSelection = input("Number: ")
-    print(tableSelection)   
+    #print(tableSelection)   # For debugging
 
  
     if(tableSelection == 1):
