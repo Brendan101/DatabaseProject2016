@@ -4,9 +4,15 @@ import sqlite3 as lite
 import sys
 
 def bulkLoad():
-    csv_file = input("Input your path to csv:")
-    table = input("Input table")
-    
+    print("Bulk loading")
+    csv_path = raw_input("Input your path to csv: ")
+
+    print("Attempting to read %s" % csv_path)
+
+    table = raw_input("Input table: ")
+
+    csv_file = open(csv_path, "r")   
+ 
     for line in csv_file:
 
         # Clear newline
@@ -41,73 +47,79 @@ def bulkLoad():
         runSql(insert_string)
 
 def select():
-    table = input("What table? Office, CustomerAgencies, AgencyLocation, RentalAgreement, Manage")
+    table = raw_input("What table? Office, CustomerAgencies, AgencyLocation, RentalAgreement, Manage: ")
     statement = ""
 
     if table == "Office":
-        value = input("What office_name?")
+        value = raw_input("office_name? ")
         statement = "select * from " + table + " where office_name='" + value + "';"
     elif table == "CustomerAgencies":
-        value = input("What agency_id?")
+        value = raw_input("agency_id? ")
         statement = "select * from " + table + " where agency_id=" + value
     elif table == "AgencyLocation":
-        value = input("What agency_city?")
+        value = raw_input("agency_city? ")
         statement = "select * from " + table + " where agency_city=" + value
     elif table == "RentalAgreement":
-        value = input("What rental_id?")
+        value = raw_input("rental_id? ")
         statement = "select * from " + table + " where rental_id=" + value
     elif table == "Manage":
-        value = input("What manage_id?")
+        value = raw_input("manage_id? ")
         statement = "select * from " + table + " where manage_id=" + value
 
     return statement
 
 def insert():
-    table = input("What table? Office, CustomerAgencies, AgencyLocation, RentalAgreement, Manage")
+    table = raw_input("What table? Office, CustomerAgencies, AgencyLocation, RentalAgreement, Manage: ")
     
     statement = ""
 
     if table == "Office":
-        office_name = input("What office_name?")
-        office_city = input("What office city")
-        office_sqft = input("Office sqft?")
-        statement = "INSERT INTO Office VALUES (" + office_name + ", " + office_city + ", " + office_sqft + ")"
+        office_name = raw_input("Office_name: ")
+        office_city = raw_input("Office city: ")
+        office_sqft = raw_input("Office sqft: ")
+        statement = "INSERT INTO Office VALUES (\'" + office_name + "\', \'" + office_city + "\', " + office_sqft + ");"
     elif table == "CustomerAgencies":
-        agency_id = input("What agency_id?")
-        agency_name = input("agency_name?")
-        agency_city = input("agency_city?")
-        phone_num = input("phone_num?")
-        statement = "INSERT INTO CustomerAgencies VALUES (" + agency_id + ", " + agency_name + ", " + agency_city + ", " + phone_num + ")"
+        agency_id = raw_input("What agency_id? ")
+        agency_name = raw_input("agency_name? ")
+        agency_city = raw_input("agency_city? ")
+        phone_num = raw_input("phone_num? ")
+        statement = "INSERT INTO CustomerAgencies VALUES (" + agency_id + ", \'" + agency_name + "\', \'" + agency_city + "\', \'" + phone_num + "\')"
     elif table == "AgencyLocation":
-        agency_city = input("What agency_city?")
-        agency_address = input("agency_address?")
-        statement = "INSERT INTO AgencyLocation VALUES (" + agency_city + ", " + agency_address + ")"
+        agency_city = raw_input("What agency_city? ")
+        agency_address = raw_input("agency_address? ")
+        statement = "INSERT INTO AgencyLocation VALUES (\'" + agency_city + "\', \'" + agency_address + "\')"
     elif table == "RentalAgreement":
-        rental_id = input("What rental_id?")
-        rental_amount = input("rental_amount?")
-        end_date = input("end_date?")
-        statement = "INSERT INTO RentalAgreement VALUES (" + rental_id + ", " + rental_amount + ", " + end_date + ")"
+        rental_id = raw_input("What rental_id? ")
+        rental_amount = raw_input("rental_amount? ")
+        end_date = raw_input("end_date? ")
+        statement = "INSERT INTO RentalAgreement VALUES (" + rental_id + ", " + rental_amount + ", \'" + end_date + "\')"
     elif table == "Manage":
-        manage_id = input("What manage_id?")
-        office_name = input("office_name?")
-        agency_id = input("agency_id?")
-        rental_id = input("rental_id?")
-        statement = "INSERT INTO Manage VALUES (" + manage_id + ", " + office_name + ", " + agency_id + ", " + rental_id + ")"
+        manage_id = raw_input("What manage_id? ")
+        office_name = raw_input("office_name? ")
+        agency_id = raw_input("agency_id? ")
+        rental_id = raw_input("rental_id? ")
+        statement = "INSERT INTO Manage VALUES (" + manage_id + ", \'" + office_name + "\', " + agency_id + ", " + rental_id + ")"
 
     return statement
 
 def delete():
     
-    table = input("What table? Office, CustomerAgencies, AgencyLocation, RentalAgreement, Manage")
-    column = input("What column?")
-    value = input("What value?")
+    table = raw_input("What table? Office, CustomerAgencies, AgencyLocation, RentalAgreement, Manage ")
+    column = raw_input("What column? ")
+    value = raw_input("What value? ")
+
+    if not value.replace('.','',1).isdigit():
+        value = "\'" + value + "\'"
+    
+
+
     statement = "delete from " + table + " where " + column + "=" + value
     
     return statement
 
 def erase():
     
-    table = input("What table?")
+    table = input("What table? ")
     
     statement = "DELETE FROM " + table + ";"
     return statement
@@ -116,13 +128,12 @@ def runSql(statement):
     con = None
     
     try:
-        con = lite.connect("soap.sql")
-        print(con)
+        con = lite.connect("db.project")
+        #print(con)
         cur = con.cursor()
-        print(cur)
+        #print(cur)
         print(statement)
         cur.execute(statement)
-        print("Hello")
         result = cur.fetchall()
         print(result)
         for rec in result:
@@ -154,21 +165,23 @@ while(done == 0):
     print("9: Quit")
 
     statement = ""
-    tableSelection = input(":")
-    
-    if(tableSelection == "1"):
-        statement = bulkLoad()
-    elif(tableSelection == "2"):
+    tableSelection = input("Number: ")
+    print(tableSelection)   
+
+ 
+    if(tableSelection == 1):
+        bulkLoad()
+    elif(tableSelection == 2):
         statement = select()     
-    elif(tableSelection == "3"):
+    elif(tableSelection == 3):
         statement = insert()
-    elif(tableSelection == "4"):
+    elif(tableSelection == 4):
         statement = delete()
-    elif(tableSelection == "5"):
+    elif(tableSelection == 5):
         statement = erase()
-    elif(tableSelection == "9"):
+    elif(tableSelection == 9):
         done = 1
     else:
         print("Enter a valid command")
-    
+   
     finished = runSql(statement)
