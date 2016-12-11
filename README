@@ -1,0 +1,13 @@
+This is the final project for Group 3
+
+db.project is an SQLite3 database file.  It was created using the
+soap.sql file and loaded with data from the sample_data.sql file.
+
+If re-created, it must be named db.project or the db_file variable
+in userProgram.py must be updated.
+
+The userProgram.py program is fairly straightforward, but for some
+option, like deleting a row, the column name must be known.  
+
+For bulk load, the data must be the proper format for the table schema.
+We included a sample Office_data.csv file for this.

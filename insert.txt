@@ -1,9 +1,0 @@
-c.execute("INSERT INTO Office VALUES (" + office_name + ", " + office_city + ", " + office_sqft + ")")
-
-c.execute("INSERT INTO CustomerAgencies VALUES (" + agency_id + ", " + agency_name ", " + agency_city + ", " + phone_num + ")")
-
-c.execute("INSERT INTO AgencyLocation VALUES (" + agency_city + ", " + agency_address + ")")
-
-c.execute("INSERT INTO RentalAgreement VALUES (" + rental_id + ", " + rental_amount + ", " + end_date + ")")
-
-c.execute("INSERT INTO Manage VALUES (" + manage_id + ", " + office_name + ", " + agency_id + ", " + rental_id + ")")
