@@ -31,7 +31,7 @@ def bulkLoad():
     print("Bulk loading")
     csv_path = raw_input("Input your path to csv: ")
 
-    print("Attempting to read %s" % csv_path)
+    #print("Attempting to read %s" % csv_path)
 
     table = raw_input("Input table: ")
 
@@ -65,7 +65,7 @@ def bulkLoad():
 
 
         insert_string += ");"
-        print(insert_string)  # Debugging
+        #print(insert_string)  # Debugging
 
         # Executting
         runSql(insert_string)
@@ -77,20 +77,35 @@ def select():
     statement = ""
 
     if table == "Office":
-        value = raw_input("office_name? ")
-        statement = "select * from " + table + " where office_name='" + value + "';"
+        value = raw_input("office_name (or \"ALL\")? ")
+        if value == "ALL":
+            statement = "select * from " + table + ";"
+        else:
+            statement = "select * from " + table + " where office_name='" + value + "';"
     elif table == "CustomerAgencies":
-        value = raw_input("agency_id? ")
-        statement = "select * from " + table + " where agency_id=" + value
+        value = raw_input("agency_id (or \"ALL\")? ")
+        if value == "ALL":
+            statement = "select * from " + table + ";"
+        else:
+            statement = "select * from " + table + " where agency_id=" + value
     elif table == "AgencyLocation":
-        value = raw_input("agency_city? ")
-        statement = "select * from " + table + " where agency_city=" + value
+        value = raw_input("agency_city (or \"ALL\")? ")
+        if value == "ALL":
+            statement = "select * from " + table + ";"
+        else:
+            statement = "select * from " + table + " where agency_city=" + value
     elif table == "RentalAgreement":
-        value = raw_input("rental_id? ")
-        statement = "select * from " + table + " where rental_id=" + value
+        value = raw_input("rental_id (or \"ALL\")? ")
+        if value == "ALL":
+            statement = "select * from " + table + ";"
+        else:
+            statement = "select * from " + table + " where rental_id=" + value
     elif table == "Manage":
-        value = raw_input("manage_id? ")
-        statement = "select * from " + table + " where manage_id=" + value
+        value = raw_input("manage_id (or \"ALL\")? ")
+        if value == "ALL":
+            statement = "select * from " + table + ";"
+        else:
+            statement = "select * from " + table + " where manage_id=" + value
 
     print("") # For readability
     return statement
@@ -195,8 +210,8 @@ def runSql(statement):
     
     
     except:
-        print("ERROR!  Exitting.")
-        exit(-1)
+        print("ERROR! Invalid query.")
+        #exit(-1)
 
 
 # Loop to handle user menu
@@ -219,17 +234,19 @@ while(done == 0):
  
     if(tableSelection == 1):
         bulkLoad()
-    elif(tableSelection == 2):
-        statement = select()     
-    elif(tableSelection == 3):
-        statement = insert()
-    elif(tableSelection == 4):
-        statement = delete()
-    elif(tableSelection == 5):
-        statement = erase()
-    elif(tableSelection == 9):
-        done = 1
+        #bulkLoad calls runSql itself
     else:
-        print("Enter a valid command")
+        if(tableSelection == 2):
+            statement = select()     
+        elif(tableSelection == 3):
+            statement = insert()
+        elif(tableSelection == 4):
+            statement = delete()
+        elif(tableSelection == 5):
+            statement = erase()
+        elif(tableSelection == 9):
+            done = 1
+        else:
+            print("Enter a valid command")
    
-    finished = runSql(statement)
+        finished = runSql(statement)
